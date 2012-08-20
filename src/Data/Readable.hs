@@ -33,20 +33,22 @@ instance Readable ByteString where
 instance Readable Text where
     fromText = return
 instance Readable Int where
-    fromText = either fail checkComplete . decimal
+    fromText = either fail checkComplete . signed decimal
 instance Readable Integer where
-    fromText = either fail checkComplete . decimal
+    fromText = either fail checkComplete . signed decimal
+instance Readable Float where
+    fromText = either fail checkComplete . rational
 instance Readable Double where
     fromText = either fail checkComplete . double
 
 instance Readable Int8 where
-    fromText = either fail checkComplete . decimal
+    fromText = either fail checkComplete . signed decimal
 instance Readable Int16 where
-    fromText = either fail checkComplete . decimal
+    fromText = either fail checkComplete . signed decimal
 instance Readable Int32 where
-    fromText = either fail checkComplete . decimal
+    fromText = either fail checkComplete . signed decimal
 instance Readable Int64 where
-    fromText = either fail checkComplete . decimal
+    fromText = either fail checkComplete . signed decimal
 
 instance Readable Word8 where
     fromText = either fail checkComplete . decimal
