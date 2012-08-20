@@ -3,6 +3,7 @@ module Data.Readable
   ) where
 
 ------------------------------------------------------------------------------
+import           Control.Monad
 import           Data.ByteString.Char8 (ByteString)
 import           Data.Int
 import           Data.Text (Text)
@@ -15,17 +16,17 @@ import           Data.Word
 ------------------------------------------------------------------------------
 -- | Monadic analog to Read that uses ByteString instead of String.
 class Readable a where
-    fromText :: Monad m => Text -> m a
-    fromBS   :: Monad m => ByteString -> m a
+    fromText :: MonadPlus m => Text -> m a
+    fromBS   :: MonadPlus m => ByteString -> m a
     fromBS = fromText . decodeUtf8
 
 
 ------------------------------------------------------------------------------
 -- | Fails if the input wasn't parsed completely.
-checkComplete :: Monad m => (t, Text) -> m t
+checkComplete :: MonadPlus m => (t, Text) -> m t
 checkComplete (a,rest)
   | T.null rest = return a
-  | otherwise   = fail "Readable: could not parse completely"
+  | otherwise   = mzero
 
 
 instance Readable ByteString where
@@ -33,28 +34,28 @@ instance Readable ByteString where
 instance Readable Text where
     fromText = return
 instance Readable Int where
-    fromText = either fail checkComplete . signed decimal
+    fromText = either (const mzero) checkComplete . signed decimal
 instance Readable Integer where
-    fromText = either fail checkComplete . signed decimal
+    fromText = either (const mzero) checkComplete . signed decimal
 instance Readable Float where
-    fromText = either fail checkComplete . rational
+    fromText = either (const mzero) checkComplete . rational
 instance Readable Double where
-    fromText = either fail checkComplete . double
+    fromText = either (const mzero) checkComplete . double
 
 instance Readable Int8 where
-    fromText = either fail checkComplete . signed decimal
+    fromText = either (const mzero) checkComplete . signed decimal
 instance Readable Int16 where
-    fromText = either fail checkComplete . signed decimal
+    fromText = either (const mzero) checkComplete . signed decimal
 instance Readable Int32 where
-    fromText = either fail checkComplete . signed decimal
+    fromText = either (const mzero) checkComplete . signed decimal
 instance Readable Int64 where
-    fromText = either fail checkComplete . signed decimal
+    fromText = either (const mzero) checkComplete . signed decimal
 
 instance Readable Word8 where
-    fromText = either fail checkComplete . decimal
+    fromText = either (const mzero) checkComplete . decimal
 instance Readable Word16 where
-    fromText = either fail checkComplete . decimal
+    fromText = either (const mzero) checkComplete . decimal
 instance Readable Word32 where
-    fromText = either fail checkComplete . decimal
+    fromText = either (const mzero) checkComplete . decimal
 instance Readable Word64 where
-    fromText = either fail checkComplete . decimal
+    fromText = either (const mzero) checkComplete . decimal
