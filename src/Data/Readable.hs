@@ -24,7 +24,9 @@ import           Data.Word
 
 
 ------------------------------------------------------------------------------
--- | Monadic analog to Read that uses ByteString instead of String.
+-- | Monadic analog to Read that uses ByteString instead of String.  We use
+-- MonadPlus to handle parse failure.  On error, fromText and fromBS will
+-- return mzero.  You can use mplus to provide fallback defaults.
 class Readable a where
     -- | Reads data from a Text representation.
     fromText :: MonadPlus m => Text -> m a
