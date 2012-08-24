@@ -32,8 +32,7 @@ Library
     text        >= 0.11 && < 0.12
 
   ghc-prof-options: -prof -auto-all
-
-  ghc-options: -Wall -fwarn-tabs -O
+  ghc-options: -Wall -fwarn-tabs
 
 source-repository head
   type:     git
