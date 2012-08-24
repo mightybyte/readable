@@ -1,6 +1,6 @@
 name:           readable
 version:        0.1
-synopsis:       Read for the modern world
+synopsis:       Reading from Text and ByteString
 
 description:
   Provides a Readable type class for reading data types from ByteString and

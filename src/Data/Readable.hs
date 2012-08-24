@@ -1,10 +1,10 @@
 {-|
 
 The Read type class is very useful for building data types from String
-representations.  But String has high overhead, so sometimes it isn't
-suitable for applications where space usage and performance are important.
-This library provides similar functionality for Text and UTF8 encoded
-ByteStrings.
+representations.  But String has high overhead, so sometimes it isn't suitable
+for applications where space usage and performance are important.  This
+library provides a simpler version of Read's functionality for Text and UTF8
+encoded ByteStrings.
 
 -}
 
@@ -24,9 +24,9 @@ import           Data.Word
 
 
 ------------------------------------------------------------------------------
--- | Monadic analog to Read that uses ByteString instead of String.  We use
--- MonadPlus to handle parse failure.  On error, fromText and fromBS will
--- return mzero.  You can use mplus to provide fallback defaults.
+-- | ByteString and Text reading using MonadPlus to handle parse failure.  On
+-- error, fromText and fromBS will return mzero.  You can use mplus to provide
+-- fallback defaults.
 class Readable a where
     -- | Reads data from a Text representation.
     fromText :: MonadPlus m => Text -> m a
