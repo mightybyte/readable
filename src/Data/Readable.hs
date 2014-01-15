@@ -1,3 +1,5 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 {-|
 
 The Read type class is very useful for building data types from String
@@ -55,6 +57,15 @@ instance Readable Float where
     fromText = either (const mzero) checkComplete . rational
 instance Readable Double where
     fromText = either (const mzero) checkComplete . double
+instance Readable Bool where
+    fromText t = case T.toLower t of
+                   "1" -> return True
+                   "0" -> return False
+                   "t" -> return True
+                   "f" -> return False
+                   "true" -> return True
+                   "false" -> return False
+                   _ -> mzero
 
 instance Readable Int8 where
     fromText = either (const mzero) checkComplete . signed decimal
