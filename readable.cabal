@@ -1,5 +1,5 @@
 name:           readable
-version:        0.1.0.2
+version:        0.2
 synopsis:       Reading from Text and ByteString
 
 description:
