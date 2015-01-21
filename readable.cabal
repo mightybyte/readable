@@ -16,6 +16,7 @@ homepage:       https://github.com/mightybyte/readable
 category:       Text
 
 extra-source-files:
+  CHANGELOG.md
   LICENSE,
   README.md,
   Setup.hs
