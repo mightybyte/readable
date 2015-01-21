@@ -56,6 +56,7 @@ checkComplete (a,rest)
 
 instance Readable ByteString where
     fromText = return . encodeUtf8
+    fromBS = return
 instance Readable Text where
     fromText = return
 instance Readable Int where
