@@ -5,8 +5,8 @@
 The Read type class is very useful for building data types from String
 representations.  But String has high overhead, so sometimes it isn't suitable
 for applications where space usage and performance are important.  This
-library provides a simpler version of Read's functionality for Text and UTF8
-encoded ByteStrings.
+library provides a simpler version of Read's functionality for Text and
+ByteStrings.
 
 -}
 
@@ -32,9 +32,18 @@ import           Data.Word
 class Readable a where
     -- | Reads data from a Text representation.
     fromText :: MonadPlus m => Text -> m a
-    -- | Reads data from a UTF8 encoded ByteString.
+    -- | Reads data from a UTF8 encoded ByteString.  The default
+    -- implementation of this function simply decodes with UTF-8 and then
+    -- calls the fromText function.  If decoding fails, mzero will be
+    -- returned.  You can provide your own implementation if you need
+    -- different behavior.
     fromBS   :: MonadPlus m => ByteString -> m a
-    fromBS = fromText . decodeUtf8
+    fromBS = fromText <=< hushPlus . decodeUtf8'
+
+
+hushPlus :: MonadPlus m => Either a b -> m b
+hushPlus (Left _) = mzero
+hushPlus (Right b) = return b
 
 
 ------------------------------------------------------------------------------
