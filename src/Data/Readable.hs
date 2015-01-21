@@ -53,12 +53,10 @@ checkComplete (a,rest)
   | T.null rest = return a
   | otherwise   = mzero
 
+-- We don't supply instances for Text or ByteString anymore because they're
+-- almost definitely not what the user would want.  Users should use the
+-- appropriate encodeUtf8/decodeUtf8 functions instead.
 
-instance Readable ByteString where
-    fromText = return . encodeUtf8
-    fromBS = return
-instance Readable Text where
-    fromText = return
 instance Readable Int where
     fromText = either (const mzero) checkComplete . signed decimal
 instance Readable Integer where
