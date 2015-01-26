@@ -73,6 +73,10 @@ instance Readable Bool where
                    "f" -> return False
                    "true" -> return True
                    "false" -> return False
+                   "y" -> return True
+                   "n" -> return False
+                   "yes" -> return True
+                   "no" -> return False
                    _ -> mzero
 
 instance Readable Int8 where
