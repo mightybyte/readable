@@ -1,3 +1,7 @@
+0.3.0.1
+-------
+* Add yes/no and y/n parsing to the Bool instance
+
 0.3
 ---
 * Remove Readable instances for ByteString and Text because they are probably
