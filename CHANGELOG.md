@@ -1,3 +1,7 @@
+0.3.1
+-----
+* Reinstate Text and ByteString instances because some users require them.
+
 0.3.0.1
 -------
 * Add yes/no and y/n parsing to the Bool instance

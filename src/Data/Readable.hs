@@ -36,7 +36,7 @@ class Readable a where
     -- implementation of this function simply decodes with UTF-8 and then
     -- calls the fromText function.  If decoding fails, mzero will be
     -- returned.  You can provide your own implementation if you need
-    -- different behavior.
+    -- different behavior such as not decoding to UTF8.
     fromBS   :: MonadPlus m => ByteString -> m a
     fromBS = fromText <=< hushPlus . decodeUtf8'
 
@@ -53,9 +53,14 @@ checkComplete (a,rest)
   | T.null rest = return a
   | otherwise   = mzero
 
--- We don't supply instances for Text or ByteString anymore because they're
--- almost definitely not what the user would want.  Users should use the
--- appropriate encodeUtf8/decodeUtf8 functions instead.
+
+-- Leaving out these instances breaks users who depend on having a unified
+-- constraint for parsing, so we need to keep them around.
+instance Readable ByteString where
+    fromText = return . encodeUtf8
+    fromBS = return
+instance Readable Text where
+    fromText = return
 
 instance Readable Int where
     fromText = either (const mzero) checkComplete . signed decimal
