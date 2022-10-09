@@ -1,5 +1,5 @@
 name:           readable
-version:        0.3.1
+version:        0.3.1.1
 synopsis:       Reading from Text and ByteString
 
 description:
@@ -11,7 +11,7 @@ license-file:   LICENSE
 author:         Doug Beardsley
 maintainer:     mightybyte@gmail.com
 build-type:     Simple
-cabal-version:  >= 1.6
+cabal-version:  >= 1.8
 homepage:       https://github.com/mightybyte/readable
 category:       Text
 
@@ -23,7 +23,8 @@ tested-with:
   GHC==8.0.2,
   GHC==8.2.2,
   GHC==8.4.4,
-  GHC==8.6.3
+  GHC==8.6.3,
+  GHC==9.2.4
 
 extra-source-files:
   CHANGELOG.md
